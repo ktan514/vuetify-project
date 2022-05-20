@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/x-color/simple-webapp/handler"
 )
 
 func newRouter() *echo.Echo {
@@ -15,7 +16,8 @@ func newRouter() *echo.Echo {
 	//  /でアクセスしたときのルーティング設定
 	e.Static("/", "../dist/")
 
-	//e.POST("/login", "login.html")
+	e.POST("/signup", handler.Signup) // POST /signup
+	e.POST("/signin", handler.Login)  // POST /signin
 
 	// /api 下はJWTの認証が必要
 	//api := e.Group("/api")
