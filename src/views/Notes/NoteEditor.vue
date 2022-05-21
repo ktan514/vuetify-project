@@ -1,73 +1,117 @@
 <template>
     <div>
-        <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-            <button
-                :class="{ 'is-active': isActive.bold() }"
-                @click="commands.bold"
-            >
-                Bold
-            </button>
-        </editor-menu-bar>
-        <editor-content :editor="editor" />
+        <switch-icons-group />
+        <tiptap-vuetify v-model="content" :extensions="extensions" />
     </div>
 </template>
 
 <script>
-// Import the editor
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import SwitchIconsGroup from './SwitchIconsGroup'
 import {
-    Blockquote,
-    CodeBlock,
-    HardBreak,
+    // component
+    TiptapVuetify,
+    // extensions
     Heading,
-    OrderedList,
-    BulletList,
-    ListItem,
-    TodoItem,
-    TodoList,
     Bold,
-    Code,
     Italic,
-    Link,
     Strike,
     Underline,
+    Code,
+    CodeBlock,
+    Paragraph,
+    BulletList,
+    OrderedList,
+    ListItem,
+    Link,
+    Blockquote,
+    HardBreak,
+    HorizontalRule,
     History,
-} from 'tiptap-extensions'
+} from 'tiptap-vuetify'
 
 export default {
-    name: 'NoteEditor',
     components: {
-        EditorMenuBar,
-        EditorContent,
+        SwitchIconsGroup,
+        TiptapVuetify,
     },
-    data() {
-        return {
-            editor: new Editor({
-                extensions: [
-                    new Blockquote(),
-                    new CodeBlock(),
-                    new HardBreak(),
-                    new Heading({ levels: [1, 2, 3] }),
-                    new BulletList(),
-                    new OrderedList(),
-                    new ListItem(),
-                    new TodoItem(),
-                    new TodoList(),
-                    new Bold(),
-                    new Code(),
-                    new Italic(),
-                    new Link(),
-                    new Strike(),
-                    new Underline(),
-                    new History(),
-                ],
-                content: '<p>This is just a boring paragraph</p>',
-            }),
-        }
-    },
-    mounted() {},
-    beforeDestroy() {
-        this.editor.destroy()
-    },
+    data: () => ({
+        extensions: [
+            // Render in the Bubble menu
+            [
+                Link,
+                {
+                    renderIn: 'bubbleMenu',
+                },
+            ],
+            [
+                Underline,
+                {
+                    renderIn: 'bubbleMenu',
+                },
+            ],
+            [
+                Strike,
+                {
+                    renderIn: 'bubbleMenu',
+                },
+            ],
+            [
+                Bold,
+                {
+                    renderIn: 'bubbleMenu',
+                    // extension's options
+                    options: {
+                        levels: [1, 2, 3],
+                    },
+                },
+            ],
+            // Render in the toolbar
+            [
+                Blockquote,
+                {
+                    renderIn: 'toolbar',
+                },
+            ],
+            // You can use a short form, the default "renderIn" is "'toolbar'"
+            History,
+            Strike,
+            Italic,
+            //ListItem, // if you need to use a list (BulletList, OrderedList)
+            [
+                ListItem,
+                {
+                    // Options that fall into the tiptap's extension
+                    options: {
+                        levels: [1, 2, 3, 4, 5],
+                    },
+                },
+            ],
+            BulletList,
+            OrderedList,
+            [
+                Heading,
+                {
+                    // Options that fall into the tiptap's extension
+                    options: {
+                        levels: [1, 2, 3, 4, 5],
+                    },
+                },
+            ],
+            Code,
+            CodeBlock,
+            HorizontalRule,
+            Paragraph,
+            HardBreak, // line break on Shift + Ctrl + Enter
+        ],
+        content: `
+<p>
+To see the result, select the text. 
+A special menu will appear to which you can bind the necessary extensions and 
+the buttons will be displayed there.
+</p>
+<p>
+<strong>Test text:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>`,
+    }),
 }
 </script>
