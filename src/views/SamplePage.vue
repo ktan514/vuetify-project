@@ -10,5 +10,13 @@
 <script>
 export default {
     name: 'SamplePage',
+    data() {
+        return {}
+    },
+    methods: function () {},
+    beforeCreate: function () {},
+    created: function () {},
+    beforeMount: function () {},
+    mounted: function () {},
 }
 </script>
