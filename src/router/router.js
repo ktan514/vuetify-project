@@ -8,6 +8,26 @@ function loadView(viewName) {
     return () => import( /* webpackChunkName: "view-[request]" */ `@/views/${viewName}.vue`)
 }
 
+function checkTokenForRouter(token, to, from, next) {
+    console.log('トークンチェック：' + token)
+
+    const url = 'api/requestAuth'
+    const method = 'POST'
+    const headers = {
+        'Authorization': `Bearer ${token}`,
+    }
+
+    fetch(url, {
+            method,
+            headers,
+        })
+        .then(response => {
+            if (response.ok) {
+                next()
+            }
+        })
+}
+
 let router = new Router({
     mode: 'history',
     routes: [{
@@ -62,25 +82,12 @@ router.beforeEach((to, from, next) => {
     // 画面遷移前に認証チェックを実行する。
     if (to.matched.some(record => record.meta.requiresAuth)) {
         const token = localStorage.getItem('token')
-        console.log('トークンチェック：' + token)
-        if (token === null) {
-            // 未ログインならホーム画面に飛ばす。
-            console.log('未ログインならホーム画面に飛ばす。')
-            next({
-                path: '/',
-                query: {
-                    redirect: to.fullPath
-                }
-            })
-        } else {
-            // ログイン済みなら要求画面に飛ばす。
-            console.log('ログイン済みなら要求画面に飛ばす。')
-            next();
-        }
+
+        checkTokenForRouter(token, to, from, next);
     } else {
         // ログイン不要なら要求画面に飛ばす。
         console.log('ログイン不要なら要求画面に飛ばす。')
-        next();
+        next()
     }
 });
 

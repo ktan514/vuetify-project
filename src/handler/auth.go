@@ -3,18 +3,21 @@ package handler
 import (
 	"net/http"
 	"time"
+	"vuetify-project/src/model"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/x-color/simple-webapp/model"
 )
 
-type jwtCustomClaims struct {
-	UID  int    `json:"uid"`
-	Name string `json:"name"`
-	jwt.StandardClaims
-}
+// UserのJSONの形を指定します。
+type (
+	jwtCustomClaims struct {
+		UID  int    `json:"uid"`
+		Name string `json:"name"`
+		jwt.StandardClaims
+	}
+)
 
 var signingKey = []byte("secret")
 
@@ -36,12 +39,12 @@ func Signup(c echo.Context) error {
 		}
 	}
 
-    if u := model.FindUser(&model.User{Name: user.Name}); u.ID != 0 {
-        return &echo.HTTPError{
+	if u := model.FindUser(&model.User{Name: user.Name}); u.ID != 0 {
+		return &echo.HTTPError{
 			Code:    http.StatusConflict,
 			Message: "name already exists",
 		}
-    }
+	}
 
 	model.CreateUser(user)
 	user.Password = ""
@@ -82,9 +85,25 @@ func Login(c echo.Context) error {
 	})
 }
 
+func RequestAuth(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	return c.JSON(http.StatusOK, "")
+}
+
 func userIDFromToken(c echo.Context) int {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*jwtCustomClaims)
 	uid := claims.UID
 	return uid
+}
+
+func userNameFromToken(c echo.Context) string {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*jwtCustomClaims)
+	name := claims.Name
+	return name
 }

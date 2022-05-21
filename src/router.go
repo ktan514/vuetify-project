@@ -1,9 +1,10 @@
 package main
 
 import (
+	"vuetify-project/src/handler"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/x-color/simple-webapp/handler"
 )
 
 func newRouter() *echo.Echo {
@@ -19,10 +20,10 @@ func newRouter() *echo.Echo {
 	e.POST("/signup", handler.Signup) // POST /signup
 	e.POST("/signin", handler.Login)  // POST /signin
 
-	// /api 下はJWTの認証が必要
-	//api := e.Group("/api")
-	//api.Use(middleware.JWTWithConfig(handler.Config))
-	//api.PUT("/", )
+	//api 下はJWTの認証が必要
+	api := e.Group("/api")
+	api.Use(middleware.JWTWithConfig(handler.Config))
+	api.POST("/requestAuth", handler.RequestAuth)
 
 	return e
 }

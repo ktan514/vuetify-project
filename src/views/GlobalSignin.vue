@@ -71,7 +71,7 @@ export default {
                         localStorage.setItem('token', token)
                         //location.href = '/menu'
                         alert('ログインします')
-                        this.$router.push('/SamplePage')
+                        this.$router.push('/')
                     }
                 })
                 .catch((error) => {

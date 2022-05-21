@@ -19,6 +19,4 @@ func init() {
 
 	// 自動マイグレーション：DBの作成
 	db.AutoMigrate(&User{})
-	db.AutoMigrate(&Todo{})
-	db.AutoMigrate(&Article{})
 }
