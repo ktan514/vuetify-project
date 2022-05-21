@@ -15,6 +15,9 @@
             <li>
                 <router-link to="/SamplePage">Go to Sample Page</router-link>
             </li>
+            <li>
+                <router-link to="/NoteEditor">Go to ノート編集</router-link>
+            </li>
         </ul>
     </v-main>
 </template>
