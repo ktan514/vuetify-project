@@ -1,117 +1,83 @@
 <template>
-    <div>
-        <switch-icons-group />
-        <tiptap-vuetify v-model="content" :extensions="extensions" />
-    </div>
+  <div>
+    <quillEditor
+        ref="myQuillEditor"
+        v-model="content"
+        :options="editorOption"
+    />
+  <div>
 </template>
 
 <script>
-import SwitchIconsGroup from './SwitchIconsGroup'
-import {
-    // component
-    TiptapVuetify,
-    // extensions
-    Heading,
-    Bold,
-    Italic,
-    Strike,
-    Underline,
-    Code,
-    CodeBlock,
-    Paragraph,
-    BulletList,
-    OrderedList,
-    ListItem,
-    Link,
-    Blockquote,
-    HardBreak,
-    HorizontalRule,
-    History,
-} from 'tiptap-vuetify'
+// [vue-quill-editor]
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import { quillEditor } from 'vue-quill-editor'
+// [katex] for Formula
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
+// [syntax]
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
 
 export default {
     components: {
-        SwitchIconsGroup,
-        TiptapVuetify,
+        //https://quilljs.com/docs/quickstart/
+        quillEditor,
     },
     data: () => ({
-        extensions: [
-            // Render in the Bubble menu
-            [
-                Link,
-                {
-                    renderIn: 'bubbleMenu',
+        content: 'Hello World',
+        editorOption: {
+            theme: 'snow',
+            modules: {
+                syntax: {
+                    highlight: (text) => hljs.highlightAuto(text).value,
                 },
-            ],
-            [
-                Underline,
-                {
-                    renderIn: 'bubbleMenu',
+                formula: true, // Include formula module
+                history: {
+                    // Enable with custom configurations
+                    delay: 2500,
+                    userOnly: true,
                 },
-            ],
-            [
-                Strike,
-                {
-                    renderIn: 'bubbleMenu',
-                },
-            ],
-            [
-                Bold,
-                {
-                    renderIn: 'bubbleMenu',
-                    // extension's options
-                    options: {
-                        levels: [1, 2, 3],
-                    },
-                },
-            ],
-            // Render in the toolbar
-            [
-                Blockquote,
-                {
-                    renderIn: 'toolbar',
-                },
-            ],
-            // You can use a short form, the default "renderIn" is "'toolbar'"
-            History,
-            Strike,
-            Italic,
-            //ListItem, // if you need to use a list (BulletList, OrderedList)
-            [
-                ListItem,
-                {
-                    // Options that fall into the tiptap's extension
-                    options: {
-                        levels: [1, 2, 3, 4, 5],
-                    },
-                },
-            ],
-            BulletList,
-            OrderedList,
-            [
-                Heading,
-                {
-                    // Options that fall into the tiptap's extension
-                    options: {
-                        levels: [1, 2, 3, 4, 5],
-                    },
-                },
-            ],
-            Code,
-            CodeBlock,
-            HorizontalRule,
-            Paragraph,
-            HardBreak, // line break on Shift + Ctrl + Enter
-        ],
-        content: `
-<p>
-To see the result, select the text. 
-A special menu will appear to which you can bind the necessary extensions and 
-the buttons will be displayed there.
-</p>
-<p>
-<strong>Test text:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>`,
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                    ['blockquote', 'code-block'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+                    [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+                    [{ direction: 'rtl' }], // text direction
+
+                    [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+                    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+                    [{ font: [] }],
+                    [{ align: [] }],
+
+                    ['image', 'video', 'link', 'formula'], // formula (requires KaTex)
+
+                    ['clean'], // remove formatting button
+                ],
+            },
+        },
     }),
+    mounted() {
+        window.katex = katex
+        hljs.configure({
+            // optionally configure hljs
+            languages: [
+                'c',
+                'cpp',
+                'css',
+                'go',
+                'html',
+                'java',
+                'javascript',
+                'python',
+                'ruby',
+            ],
+        })
+    },
 }
 </script>

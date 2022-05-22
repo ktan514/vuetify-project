@@ -2,7 +2,7 @@ import Vue from 'vue'
 import router from './router/router'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import './plugins/tiptap-vuetify'
+import './plugins/vue-quill-editor'
 
 Vue.config.productionTip = false
 

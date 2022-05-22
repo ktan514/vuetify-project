@@ -54,24 +54,14 @@ export default {
 
             fetch(url, { method, headers, body })
                 .then((response) => {
-                    if (response.ok) {
-                        return response.json()
-                    } else {
-                        alert('Failed to login. Please retry')
-                        this.userName = ''
+                    if (response.status === 400) {
+                        alert('Name or Password are empty. Please retry')
+                    } else if (response.status === 409) {
+                        alert('Name already exists. Please retry')
+                        this.name = ''
                         this.password = ''
-                        return { token: '' }
-                    }
-                })
-                .then((json) => {
-                    const token = json.token
-                    if (token.length > 0) {
-                        // Cookieのようなクライアントのデータ保存用ストレージ。
-                        // Cookieより容量が大きく(5MB)利用時に必要なデータのみ取り出せる。
-                        localStorage.setItem('token', token)
-                        //location.href = '/menu'
-                        alert('ユーザーを登録しました。')
-                        this.$router.push('/')
+                    } else if (response.status === 201) {
+                        this.$router.push('/GlobalSignin')
                     }
                 })
                 .catch((error) => {
