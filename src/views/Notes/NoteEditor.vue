@@ -21,7 +21,8 @@ import 'katex/dist/katex.min.css'
 // [syntax]
 import hljs from 'highlight.js'
 import 'highlight.js/styles/monokai-sublime.css'
-//import { container } from 'webpack'
+// [table]
+import 'quill-table-module'
 
 //import quillConfig from './quill-config.js'
 
@@ -58,12 +59,24 @@ const CustomUndo = () => {
     // http://defghi1977.html.xdomain.jp/tech/svgMemo/svgMemo_03.htm
     // SVG描画サンプルについて
     // https://iconsvg.xyz/
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="arcs"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>`
+    // A rx ry x-axis-rotation large-arc-flag sweep-flag x y
+    // a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
+    //
+    // [丸矢印]
+    // M 2.5 2
+    // v 6
+    // h 6
+    // M 2.66 15.57
+    // a 10 10 0 1 0 .57 -8.38
+    return `<svg viewBox="0 0 18 18">
+		<path class="ql-stroke" d="M 17,9 a 8 8 0 1 1 -4,-7"/>
+		<path class="ql-stroke" d="M2.5 2v6h6"/>
+	</svg>`
 }
 
 // Redo button icon component for Quill editor
 const CustomRedo = () => {
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="arcs"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>`
+    return `<svg viewBox="0 0 18 18"><path class="ql-stroke" d="M21.5 2v6h-6M21.34 15.57a5 5 0 1 1 0 0"/></svg>`
 }
 
 export default {
@@ -76,6 +89,7 @@ export default {
         editorOption: {
             theme: 'snow',
             modules: {
+                table: true,
                 syntax: {
                     highlight: (text) => hljs.highlightAuto(text).value,
                 },
@@ -89,8 +103,12 @@ export default {
                     container: [
                         ['revoke', 'redo'],
 
-                        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                        // toggled buttons
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ font: [] }, { align: [] }],
+                        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
 
+                        // coding
                         ['blockquote', 'code-block'],
 
                         [{ list: 'ordered' }, { list: 'bullet' }],
@@ -101,13 +119,71 @@ export default {
                         [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
                         [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-                        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-                        [{ font: [] }],
-                        [{ align: [] }],
+                        // media
+                        ['image', 'video', 'link', 'formula'],
 
-                        ['image', 'video', 'link', 'formula'], // formula (requires KaTex)
+                        // remove formatting button
+                        ['clean'],
 
-                        ['clean'], // remove formatting button
+                        // table
+                        [
+                            {
+                                table: [
+                                    'newtable_1_1',
+                                    'newtable_1_2',
+                                    'newtable_1_3',
+                                    'newtable_1_4',
+                                    'newtable_1_5',
+                                    'newtable_2_1',
+                                    'newtable_2_2',
+                                    'newtable_2_3',
+                                    'newtable_2_4',
+                                    'newtable_2_5',
+                                    'newtable_3_1',
+                                    'newtable_3_2',
+                                    'newtable_3_3',
+                                    'newtable_3_4',
+                                    'newtable_3_5',
+                                    'newtable_4_1',
+                                    'newtable_4_2',
+                                    'newtable_4_3',
+                                    'newtable_4_4',
+                                    'newtable_4_5',
+                                    'newtable_5_1',
+                                    'newtable_5_2',
+                                    'newtable_5_3',
+                                    'newtable_5_4',
+                                    'newtable_5_5',
+                                    'newtable_6_1',
+                                    'newtable_6_2',
+                                    'newtable_6_3',
+                                    'newtable_6_4',
+                                    'newtable_6_5',
+                                    'newtable_7_1',
+                                    'newtable_7_2',
+                                    'newtable_7_3',
+                                    'newtable_7_4',
+                                    'newtable_7_5',
+                                    'newtable_8_1',
+                                    'newtable_8_2',
+                                    'newtable_8_3',
+                                    'newtable_8_4',
+                                    'newtable_8_5',
+                                    'newtable_9_1',
+                                    'newtable_9_2',
+                                    'newtable_9_3',
+                                    'newtable_9_4',
+                                    'newtable_9_5',
+                                    'newtable_10_1',
+                                    'newtable_10_2',
+                                    'newtable_10_3',
+                                    'newtable_10_4',
+                                    'newtable_10_5',
+                                ],
+                            },
+                            { table: 'append-row' },
+                            { table: 'append-col' },
+                        ],
                     ],
                     handlers: {
                         revoke: () => {
