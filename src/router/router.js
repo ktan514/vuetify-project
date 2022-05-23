@@ -49,7 +49,7 @@ let router = new Router({
 		{
 			path: '/GlobalSignin',
 			name: 'GlobalSignin',
-			component: loadView('GlobalSignin'),
+			component: loadView('System/GlobalSignin'),
 			meta: {
 				requiresAuth: false
 			}
@@ -57,7 +57,7 @@ let router = new Router({
 		{
 			path: '/GlobalSignup',
 			name: 'GlobalSignup',
-			component: loadView('GlobalSignup'),
+			component: loadView('System/GlobalSignup'),
 			meta: {
 				requiresAuth: false
 			}
@@ -65,7 +65,7 @@ let router = new Router({
 		{
 			path: '/GlobalSignout',
 			name: 'GlobalSignout',
-			component: loadView('GlobalSignout'),
+			component: loadView('System/GlobalSignout'),
 			meta: {
 				requiresAuth: true
 			}
