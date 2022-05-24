@@ -1,4 +1,4 @@
-// src/plugins/vuetify.js
+// src/plugins/plugin-vuetify.js
 
 import Vue from 'vue'
 import Vuetify from 'vuetify'

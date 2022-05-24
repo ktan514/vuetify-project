@@ -1,18 +1,11 @@
 <template>
-  <div>
-    <quillEditor
-        ref="myQuillEditor"
-        v-model="content"
-        :options="editorOption"
-    />
-  <div>
+    <div>
+        <quillEditor v-model="content" :options="editorOption" />
+    </div>
 </template>
 
 <script>
 // [vue-quill-editor]
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 // [katex] for Formula
 import katex from 'katex'
@@ -246,10 +239,12 @@ p {
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='small']::before {
     content: '10px';
 }
+
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='large']::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='large']::before {
     content: '18px';
 }
+
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='huge']::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='huge']::before {
     content: '32px';
@@ -259,10 +254,12 @@ p {
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
     content: 'デフォルト';
 }
+
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='serif']::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='serif']::before {
     content: 'serif';
 }
+
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='monospace']::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='monospace']::before {
     content: 'monospace';

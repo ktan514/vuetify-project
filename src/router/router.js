@@ -73,7 +73,7 @@ let router = new Router({
 		{
 			path: '/NoteEditor',
 			name: 'NoteEditor',
-			component: loadView('Notes/NoteEditor'),
+			component: loadView('Notes/view-note-editor'),
 			meta: {
 				requiresAuth: true
 			}

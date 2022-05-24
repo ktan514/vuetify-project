@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import router from './router/router'
 import App from './App.vue'
-import vuetify from './plugins/vuetify'
-import './plugins/quill'
+import vuetify from './plugins/plugin-vuetify'
+import './plugins/plugin-vue-quill-editor'
 
 Vue.config.productionTip = false
 
