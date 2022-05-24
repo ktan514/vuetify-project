@@ -1,12 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import routerConfig from './router-config.js'
 
 Vue.use(Router)
-
-function loadView(viewName) {
-	console.log('view名：' + viewName)
-	return () => import( /* webpackChunkName: "view-[request]" */ `@/views/${viewName}.vue`)
-}
 
 function checkTokenForRouter(token, to, from, next) {
 	console.log('トークンチェック：' + token)
@@ -28,57 +24,28 @@ function checkTokenForRouter(token, to, from, next) {
 		})
 }
 
+function loadView(vueFile) {
+	console.log('view名：' + `@/views/${vueFile}.vue`)
+	return () => import( /* webpackChunkName: "view-[request]" */ `@/views/${vueFile}.vue`)
+}
+
+let routes = []
+for (let key in routerConfig.siteMap) {
+	let site = routerConfig.siteMap[key]
+	routes.push({
+		path: site.path,
+		name: site.name,
+		component: loadView(site.file),
+		meta: {
+			requiresAuth: site.meta.requiresAuth,
+		},
+	})
+}
+
+
 let router = new Router({
 	mode: 'history',
-	routes: [{
-			path: '/',
-			name: 'SampleHome',
-			component: loadView('SampleHome'),
-			meta: {
-				requiresAuth: false
-			}
-		},
-		{
-			path: '/SamplePage',
-			name: 'SamplePage',
-			component: loadView('SamplePage'),
-			meta: {
-				requiresAuth: true
-			}
-		},
-		{
-			path: '/GlobalSignin',
-			name: 'GlobalSignin',
-			component: loadView('System/GlobalSignin'),
-			meta: {
-				requiresAuth: false
-			}
-		},
-		{
-			path: '/GlobalSignup',
-			name: 'GlobalSignup',
-			component: loadView('System/GlobalSignup'),
-			meta: {
-				requiresAuth: false
-			}
-		},
-		{
-			path: '/GlobalSignout',
-			name: 'GlobalSignout',
-			component: loadView('System/GlobalSignout'),
-			meta: {
-				requiresAuth: true
-			}
-		},
-		{
-			path: '/NoteEditor',
-			name: 'NoteEditor',
-			component: loadView('Notes/view-note-editor'),
-			meta: {
-				requiresAuth: true
-			}
-		}
-	],
+	routes: routes,
 })
 
 /**

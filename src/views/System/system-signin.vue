@@ -24,14 +24,16 @@
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="signup" color="primary">サインアップ</v-btn>
+            <v-btn @click="signin" color="primary">サインイン</v-btn>
         </v-card-actions>
     </v-main>
 </template>
 
 <script>
+import routerConfig from '@/router/router-config'
+
 export default {
-    name: 'GlobalSignup',
+    name: routerConfig.siteMap['signin'],
     data() {
         return {
             userName: '',
@@ -39,8 +41,8 @@ export default {
         }
     },
     methods: {
-        signup: function () {
-            const url = '/signup'
+        signin: function () {
+            const url = '/signin'
             const method = 'POST'
             const headers = {
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -50,18 +52,28 @@ export default {
                 password: this.password,
             })
 
-            alert('サインアップ認証を行います。')
+            alert('サインイン認証を行います。')
 
             fetch(url, { method, headers, body })
                 .then((response) => {
-                    if (response.status === 400) {
-                        alert('Name or Password are empty. Please retry')
-                    } else if (response.status === 409) {
-                        alert('Name already exists. Please retry')
-                        this.name = ''
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        alert('Failed to login. Please retry')
+                        this.userName = ''
                         this.password = ''
-                    } else if (response.status === 201) {
-                        this.$router.push('/GlobalSignin')
+                        return { token: '' }
+                    }
+                })
+                .then((json) => {
+                    const token = json.token
+                    if (token.length > 0) {
+                        // Cookieのようなクライアントのデータ保存用ストレージ。
+                        // Cookieより容量が大きく(5MB)利用時に必要なデータのみ取り出せる。
+                        localStorage.setItem('token', token)
+                        //location.href = '/menu'
+                        alert('ログインします')
+                        this.$router.push('/')
                     }
                 })
                 .catch((error) => {

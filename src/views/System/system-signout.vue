@@ -9,8 +9,10 @@
 </template>
 
 <script>
+import routerConfig from '@/router/router-config'
+
 export default {
-    name: 'GlobalSignout',
+    name: routerConfig.siteMap['signin'],
     data() {
         return {}
     },
