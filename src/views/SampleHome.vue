@@ -4,19 +4,24 @@
         <h1>ホーム画面</h1>
         <ul>
             <li>
-                <router-link to="/GlobalSignin">Go to Signin</router-link>
+                <router-link v-bind:to="{ $linkOfSignin }">
+                    Go to Signin
+                </router-link>
             </li>
             <li>
-                <router-link to="/GlobalSignup">Go to Signup</router-link>
+                <router-link v-bind:to="{ $linkOfSignup }">
+                    Go to Signup
+                </router-link>
             </li>
             <li>
-                <router-link to="/GlobalSignout">Go to Signout</router-link>
+                <router-link v-bind:to="{ $linkOfSignout }">
+                    Go to Signout
+                </router-link>
             </li>
             <li>
-                <router-link to="/SamplePage">Go to Sample Page</router-link>
-            </li>
-            <li>
-                <router-link to="/NoteEditor">Go to ノート編集</router-link>
+                <router-link v-bind:to="{ $linkOfNotes }">
+                    Go to ノート編集
+                </router-link>
             </li>
         </ul>
     </v-main>
@@ -24,7 +29,17 @@
 
 
 <script>
+import routerConfig from '@/router/router-config'
+
+const linkOfSignin = routerConfig.siteMap.signin.path
+const linkOfSignout = routerConfig.siteMap.signout.path
+const linkOfSignup = routerConfig.siteMap.signup.path
+const linkOfNotes = routerConfig.siteMap.notes.path
+
+console.log(linkOfSignout)
+
 export default {
-    name: 'SampleHome',
+    name: routerConfig.siteMap['home'],
 }
+export { linkOfSignin, linkOfSignout, linkOfSignup, linkOfNotes }
 </script>
