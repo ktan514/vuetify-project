@@ -1,7 +1,7 @@
 package main
 
 import (
-	"vuetify-project/src/handler"
+	"vuetify-project/src/service/handler"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"

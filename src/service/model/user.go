@@ -2,7 +2,7 @@ package model
 
 type User struct {
 	// 大文字にしなければ値が取得できない
-	ID       int    `json:"id" gorm:"praimaly_key"`
+	ID       int    `json:"id" gorm:"primary_key"`
 	Name     string `json:"name"`
 	Password string `json:"password"`
 }
