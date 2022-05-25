@@ -25,8 +25,8 @@ function checkTokenForRouter(token, to, from, next) {
 }
 
 function loadView(vueFile) {
-	console.log('view名：' + `@/views/${vueFile}.vue`)
-	return () => import( /* webpackChunkName: "view-[request]" */ `@/views/${vueFile}.vue`)
+	console.log('view名：' + `@views/${vueFile}.vue`)
+	return () => import( /* webpackChunkName: "view-[request]" */ `@views/${vueFile}.vue`)
 }
 
 let routes = []
