@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"time"
-	"vuetify-project/src/model"
+	"vuetify-project/src/service/model"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
