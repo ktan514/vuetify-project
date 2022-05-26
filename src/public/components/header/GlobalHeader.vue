@@ -1,5 +1,5 @@
 <template>
-    <v-main>
+    <v-card color="grey lighten-4" flat height="80px" tile>
         <!-- ツールバーを表示します。 -->
         <v-toolbar>
             <!-- ハンバーガーメニューアイコン -->
@@ -14,7 +14,7 @@
             <!-- ドットメニューアイコン -->
             <v-btn icon><v-icon>mdi-dots-vertical</v-icon></v-btn>
         </v-toolbar>
-    </v-main>
+    </v-card>
 </template>
 
 <script>
