@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "highlight.js": "^11.5.1",
+    "quill-better-table": "^1.2.10",
     "tiptap": "^1.32.2",
     "tiptap-extensions": "^1.35.2",
     "vue": "^2.6.14",
