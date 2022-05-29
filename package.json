@@ -9,32 +9,17 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "highlight.js": "^11.5.1",
-    "quill-better-table": "^1.2.10",
-    "tiptap": "^1.32.2",
-    "tiptap-extensions": "^1.35.2",
-    "vue": "^2.6.14",
-    "vue-katex": "^0.5.0",
-    "vue-quill-editor": "^3.0.6",
-    "vue-router": "^2.8.1",
-    "vuetify": "^2.6.6"
+    "vue": "^3.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
-    "@mdi/font": "^6.7.96",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "node-sass": "^7.0.1",
-    "quill-table-module": "^1.0.1",
-    "sass": "^1.52.1",
-    "sass-loader": "^13.0.0",
-    "tiptap-vuetify": "^2.24.0",
-    "vue-template-compiler": "^2.6.14",
-    "webpack": "^5.72.1"
+    "vue-cli-plugin-vuetify": "~2.5.0"
   },
   "eslintConfig": {
     "root": true,
@@ -42,7 +27,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/vue3-essential",
       "eslint:recommended"
     ],
     "parserOptions": {
@@ -53,6 +38,7 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie 11"
   ]
 }

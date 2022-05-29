@@ -6,8 +6,7 @@
     "moduleResolution": "node",
     "paths": {
       "@/*": [
-        "src/*",
-        "src/public/*",
+        "src/*"
       ]
     },
     "lib": [
@@ -15,7 +14,6 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ],
-    "jsx": "preserve"
+    ]
   }
 }
